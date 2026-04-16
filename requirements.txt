@@ -1,0 +1,36 @@
+# ============================================================
+#  Akıllı Lojistik ve Rota Optimizasyonu
+#  Python 3.14 uyumlu versiyon listesi
+#  Kurulum: pip install -r requirements.txt
+# ============================================================
+
+# ── Veri işleme ─────────────────────────────────────────────
+numpy>=2.1.0               # Python 3.14 için cp314 wheels mevcut
+pandas>=2.2.2
+scipy>=1.14.0              # cKDTree (SpatialTemporalJoiner)
+
+# ── Makine Öğrenmesi ─────────────────────────────────────────
+scikit-learn>=1.5.1
+xgboost>=2.1.1
+joblib>=1.4.2
+
+# ── API & Web ────────────────────────────────────────────────
+fastapi>=0.111.1
+uvicorn[standard]>=0.30.3
+pydantic>=2.8.2
+pydantic-settings>=2.3.4
+
+# ── HTTP İstekleri ───────────────────────────────────────────
+requests>=2.32.3
+
+# ── Konfigürasyon ────────────────────────────────────────────
+PyYAML>=6.0.1
+
+# ── Frontend ─────────────────────────────────────────────────
+streamlit>=1.36.0
+plotly>=5.22.0
+folium>=0.17.0
+streamlit-folium>=0.21.0
+
+# ── Yardımcılar ──────────────────────────────────────────────
+python-dotenv>=1.0.1

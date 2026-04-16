@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -c \"C:/Users/Tahae/hackathon-smart-logistic/\"*.md)"
+    ]
+  }
+}
