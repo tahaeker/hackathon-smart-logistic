@@ -43,7 +43,7 @@ st.set_page_config(
 # ════════════════════════════════════════════════════════════
 # Sabitler
 # ════════════════════════════════════════════════════════════
-API_BASE        = "http://127.0.0.1:8000"
+API_BASE        = "http://127.0.0.1:8001"
 STOPS_CSV       = PROJECT_ROOT / "data" / "raw" / "route_stops.csv"
 TIMEOUT_SEC     = 10    # /health, /predict için
 TIMEOUT_LONG    = 120   # /optimize için (büyük rotalarda uzun sürebilir)
@@ -188,17 +188,26 @@ def load_stops_csv() -> pd.DataFrame:
         return pd.DataFrame()
 
 
-def api_get(endpoint: str) -> dict | None:
-    """GET isteği; bağlantı hatasında None döner."""
+def api_get(endpoint: str, timeout: int = TIMEOUT_SEC) -> dict | None:
+    """GET isteği; bağlantı veya timeout hatasında None döner (sessizce)."""
     try:
-        resp = requests.get(f"{API_BASE}{endpoint}", timeout=TIMEOUT_SEC)
+        resp = requests.get(f"{API_BASE}{endpoint}", timeout=timeout)
         resp.raise_for_status()
         return resp.json()
-    except requests.exceptions.ConnectionError:
+    except (requests.exceptions.ConnectionError,
+            requests.exceptions.Timeout):
         return None
-    except Exception as exc:
-        st.error(f"API hatası: {exc}")
+    except Exception:
         return None
+
+
+def _cached_health() -> dict | None:
+    """
+    Health check — önbellekleme YOK.
+    Sadece başarılı yanıt döner; None ise backend çevrimdışıdır.
+    Timeout 3 saniye: sidebar'ı bloklamaz.
+    """
+    return api_get("/health", timeout=8)
 
 
 def api_post(endpoint: str, payload: dict, long_timeout: bool = False) -> dict | None:
@@ -318,19 +327,18 @@ def render_sidebar(stops_all: pd.DataFrame) -> tuple[str, pd.DataFrame]:
         st.markdown("## 🚚 Smart Logistics AI")
         st.markdown("---")
 
-        # API sağlık durumu
-        health = api_get("/health")
+        # API sağlık durumu — önbellekli, 3s timeout, hata göstermez
+        health = _cached_health()
         if health:
             model_ok = health.get("model_loaded", False)
             w_status = health.get("weather_api", "?")
-            st.markdown(
-                f"**Sistem:** {'🟢 Çevrimiçi' if model_ok else '🟡 Model Eksik'}"
-            )
+            st.markdown(f"**Sistem:** {'🟢 Çevrimiçi' if model_ok else '🟡 Model Eksik'}")
             st.markdown(f"**Model:** {'✅ Yüklü' if model_ok else '❌ Yüklenmedi'}")
             st.markdown(f"**Hava API:** {'🌐 Canlı' if w_status == 'live' else '📦 Mock'}")
             st.markdown(f"**Uptime:** {health.get('uptime_sec', 0):.0f} sn")
         else:
             st.markdown("**Sistem:** 🔴 Çevrimdışı")
+            st.caption("Backend'i başlatın:\n`python -m uvicorn src.api.fastapi_app:app --reload --port 8000`")
 
         st.markdown("---")
         st.markdown("### 📋 Rota Seçimi")

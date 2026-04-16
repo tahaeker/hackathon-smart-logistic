@@ -176,7 +176,8 @@ class DelayPredictor(metaclass=_SingletonMeta):
             if df.empty:
                 raise ValueError("Giriş verisi boş DataFrame'e dönüştürüldü.")
 
-            # Sadece ilk satırı al
+            # Eksik kolonları NaN ile tamamla → SimpleImputer halleder
+            df  = self._align_columns(df)
             row = df.iloc[[0]]
             raw_pred = float(self.pipeline.predict(row)[0])
 
@@ -280,7 +281,9 @@ class DelayPredictor(metaclass=_SingletonMeta):
         """
         try:
             self._check_ready()
-            df  = self._to_dataframe(data).iloc[[0]]
+            df  = self._to_dataframe(data)
+            df  = self._align_columns(df)
+            df  = df.iloc[[0]]
             rng = np.random.default_rng(seed=42)
 
             base_pred = float(self.pipeline.predict(df)[0])
