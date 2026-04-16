@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(wc -c \"C:/Users/Tahae/hackathon-smart-logistic/\"*.md)"
+      "Bash(wc -c \"C:/Users/Tahae/hackathon-smart-logistic/\"*.md)",
+      "Bash(gh pr create --title 'Akıllı Lojistik ve Rota Optimizasyonu — Tam MVP' --body ':*)",
+      "Bash(winget install:*)",
+      "Bash(python -c \"import ast, sys; ast.parse\\(open\\('frontend/streamlit_dashboard.py'\\).read\\(\\)\\); print\\('Syntax OK'\\)\")",
+      "Bash(python -c ':*)"
     ]
   }
 }

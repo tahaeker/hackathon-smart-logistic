@@ -508,7 +508,7 @@ def render_risk_analysis(route_df: pd.DataFrame) -> None:
 
     if st.button("🔍 Canlı Risk Analizi Yap", use_container_width=True):
         with st.spinner("Anlık hava durumu ve risk skoru çekiliyor..."):
-            time.sleep(0.3)  # UX: progress hissi
+            time.sleep(0.3)
             payload = {
                 "latitude":              lat,
                 "longitude":             lon,
@@ -521,57 +521,62 @@ def render_risk_analysis(route_df: pd.DataFrame) -> None:
                 "distance_from_prev_km": float(first_stop.get("distance_from_prev_km", 10)),
                 "delay_probability":     float(first_stop.get("delay_probability", 0.2)),
             }
-            result = api_post("/predict", payload)
+            fetched = api_post("/predict", payload)
 
-        if result is None:
+        if fetched is None:
             _api_down_warning()
-            return
-
-        weather    = result.get("weather", {})
-        delay_min  = result.get("predicted_delay_min", 0)
-        severity   = weather.get("weather_severity_index", 0)
-        label, badge_cls = _severity_to_label(severity)
-        is_mock    = weather.get("is_mock", True)
-
-        # Risk kartı
-        risk_color  = "#FFEBEE" if severity > 0.4 else "#E8F5E9"
-        risk_border = COLOR_DANGER if severity > 0.4 else COLOR_SUCCESS
-
-        st.markdown(f"""
-        <div style="background:{risk_color}; border-left:5px solid {risk_border};
-                    border-radius:12px; padding:20px 24px; margin:12px 0;">
-            <b style="font-size:1.1rem;">
-                {'⚠️' if severity > 0.4 else '✅'} Canlı Risk Analizi Sonucu
-                {'<span style="font-size:0.75rem; background:#E0E0E0; padding:2px 8px; '
-                 'border-radius:10px; margin-left:8px;">MOCK</span>' if is_mock else ''}
-            </b><br><br>
-            <b>📍 Konum:</b> {lat:.4f}, {lon:.4f} &nbsp;|&nbsp;
-            <b>🌡 Sıcaklık:</b> {weather.get('temperature_c', '?')}°C &nbsp;|&nbsp;
-            <b>🌧 Yağış:</b> {weather.get('precipitation_mm', 0):.1f} mm<br>
-            <b>💨 Rüzgar:</b> {weather.get('wind_speed_kmh', '?')} km/h &nbsp;|&nbsp;
-            <b>👁 Görüş:</b> {weather.get('visibility_km', '?')} km &nbsp;|&nbsp;
-            <b>🛣 Yüzey:</b> {weather.get('road_surface_condition', '?').upper()}<br><br>
-            <b>Risk Seviyesi:</b> {label} &nbsp; (Skor: {severity:.2f})<br>
-            <b>⏱ Tahmin Edilen Gecikme:</b>
-            <span style="font-size:1.2rem; font-weight:800;">
-                {delay_min:.1f} dakika
-            </span>
-        </div>
-        """, unsafe_allow_html=True)
-
-        if severity > 0.5:
-            st.warning(
-                f"⚠️ Canlı Hava: **{weather.get('weather_condition','?').upper()}** — "
-                f"Görüş {weather.get('visibility_km','?')} km. "
-                f"Gecikme Riski **YÜKSEK**! Sürücüleri uyar."
-            )
-        elif severity > 0.3:
-            st.info(
-                f"ℹ️ Hava koşulları **orta** risk oluşturuyor. "
-                f"Güzergah dikkatli takip edilmeli."
-            )
         else:
-            st.success("✅ Hava koşulları uygun. Rota nominal şartlarda ilerleyebilir.")
+            st.session_state["risk_result"] = fetched
+
+    # Kaydedilmiş sonucu her zaman göster
+    result = st.session_state.get("risk_result")
+    if result is None:
+        return
+
+    weather    = result.get("weather", {})
+    delay_min  = result.get("predicted_delay_min", 0)
+    severity   = weather.get("weather_severity_index", 0)
+    label, badge_cls = _severity_to_label(severity)
+    is_mock    = weather.get("is_mock", True)
+
+    risk_color  = "#FFEBEE" if severity > 0.4 else "#E8F5E9"
+    risk_border = COLOR_DANGER if severity > 0.4 else COLOR_SUCCESS
+
+    st.markdown(f"""
+    <div style="background:{risk_color}; border-left:5px solid {risk_border};
+                border-radius:12px; padding:20px 24px; margin:12px 0;">
+        <b style="font-size:1.1rem;">
+            {'⚠️' if severity > 0.4 else '✅'} Canlı Risk Analizi Sonucu
+            {'<span style="font-size:0.75rem; background:#E0E0E0; padding:2px 8px; '
+             'border-radius:10px; margin-left:8px;">MOCK</span>' if is_mock else ''}
+        </b><br><br>
+        <b>📍 Konum:</b> {lat:.4f}, {lon:.4f} &nbsp;|&nbsp;
+        <b>🌡 Sıcaklık:</b> {weather.get('temperature_c', '?')}°C &nbsp;|&nbsp;
+        <b>🌧 Yağış:</b> {weather.get('precipitation_mm', 0):.1f} mm<br>
+        <b>💨 Rüzgar:</b> {weather.get('wind_speed_kmh', '?')} km/h &nbsp;|&nbsp;
+        <b>👁 Görüş:</b> {weather.get('visibility_km', '?')} km &nbsp;|&nbsp;
+        <b>🛣 Yüzey:</b> {weather.get('road_surface_condition', '?').upper()}<br><br>
+        <b>Risk Seviyesi:</b> {label} &nbsp; (Skor: {severity:.2f})<br>
+        <b>⏱ Tahmin Edilen Gecikme:</b>
+        <span style="font-size:1.2rem; font-weight:800;">
+            {delay_min:.1f} dakika
+        </span>
+    </div>
+    """, unsafe_allow_html=True)
+
+    if severity > 0.5:
+        st.warning(
+            f"⚠️ Canlı Hava: **{weather.get('weather_condition','?').upper()}** — "
+            f"Görüş {weather.get('visibility_km','?')} km. "
+            f"Gecikme Riski **YÜKSEK**! Sürücüleri uyar."
+        )
+    elif severity > 0.3:
+        st.info(
+            f"ℹ️ Hava koşulları **orta** risk oluşturuyor. "
+            f"Güzergah dikkatli takip edilmeli."
+        )
+    else:
+        st.success("✅ Hava koşulları uygun. Rota nominal şartlarda ilerleyebilir.")
 
 
 def render_optimization_result(route_df: pd.DataFrame, route_id: str) -> None:
@@ -584,32 +589,35 @@ def render_optimization_result(route_df: pd.DataFrame, route_id: str) -> None:
         help="AI motoru tüm permutasyonları değerlendirerek en hızlı rotayı bulur.",
     )
 
-    if not optimize_clicked:
-        return
+    if optimize_clicked:
+        # Payload hazırla
+        payload = _stops_to_payload(route_df, route_id)
+        if payload is None:
+            st.error("Payload oluşturulamadı.")
+            return
 
-    # Payload hazırla
-    payload = _stops_to_payload(route_df, route_id)
-    if payload is None:
-        st.error("Payload oluşturulamadı.")
-        return
+        # API isteği
+        with st.spinner("🧠 AI motoru rota permutasyonlarını analiz ediyor..."):
+            progress = st.progress(0, text="Mesafe matrisi hesaplanıyor...")
+            time.sleep(0.4); progress.progress(25, text="Tortuosity faktörü belirleniyor...")
+            time.sleep(0.3); progress.progress(50, text="ML gecikme tahminleri çalışıyor...")
 
-    # API isteği
-    with st.spinner("🧠 AI motoru rota permutasyonlarını analiz ediyor..."):
-        progress = st.progress(0, text="Mesafe matrisi hesaplanıyor...")
-        time.sleep(0.4); progress.progress(25, text="Tortuosity faktörü belirleniyor...")
-        time.sleep(0.3); progress.progress(50, text="ML gecikme tahminleri çalışıyor...")
+            fetched = api_post("/optimize", payload, long_timeout=True)
 
-        result = api_post("/optimize", payload, long_timeout=True)
+            progress.progress(85, text="En iyi sıralama seçiliyor...")
+            time.sleep(0.3); progress.progress(100, text="Tamamlandı!")
+            time.sleep(0.3); progress.empty()
 
-        progress.progress(85, text="En iyi sıralama seçiliyor...")
-        time.sleep(0.3); progress.progress(100, text="Tamamlandı!")
-        time.sleep(0.3); progress.empty()
+        if fetched is None:
+            if not _backend_reachable():
+                _api_down_warning()
+            return
 
+        st.session_state["opt_result"] = fetched
+
+    # Kaydedilmiş sonucu her zaman göster
+    result = st.session_state.get("opt_result")
     if result is None:
-        # Hata mesajı zaten api_post içinde gösterildi (timeout / http error)
-        # Sadece bağlantı hiç kurulamadıysa backend uyarısı göster
-        if not _backend_reachable():
-            _api_down_warning()
         return
 
     # ── Kazanım banner ──────────────────────────────────────
@@ -775,7 +783,16 @@ def render_optimization_result(route_df: pd.DataFrame, route_id: str) -> None:
 # ANA UYGULAMA
 # ════════════════════════════════════════════════════════════
 
+def _init_session_state() -> None:
+    """Session state anahtarlarını ilk kez başlat."""
+    st.session_state.setdefault("opt_result", None)
+    st.session_state.setdefault("risk_result", None)
+    st.session_state.setdefault("last_route_id", None)
+
+
 def main() -> None:
+    _init_session_state()
+
     # Veri yükle
     with st.spinner("Veri yükleniyor..."):
         stops_all = load_stops_csv()
@@ -785,6 +802,12 @@ def main() -> None:
 
     # Sidebar + rota seçimi
     selected_route, route_df = render_sidebar(stops_all)
+
+    # Rota değiştiğinde önceki sonuçları temizle
+    if st.session_state["last_route_id"] != selected_route:
+        st.session_state["opt_result"]    = None
+        st.session_state["risk_result"]   = None
+        st.session_state["last_route_id"] = selected_route
 
     if stops_all.empty:
         st.error(
