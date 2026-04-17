@@ -9704,3 +9704,23 @@ ValueError: columns are missing: {'delay_ratio', 'speed_ratio', 'weather_conditi
   Hesaplama süresi       : 32.193 sn
 ══════════════════════════════════════════════════════════
 2026-04-16 19:48:29 | INFO     | src.api.fastapi_app | POST /optimize | route=RT-0051 | kazanılan=28.6 dk | TW iyileşme=5→3 | 32200ms
+2026-04-17 21:45:40 | INFO     | Config | Konfigürasyon yüklendi: settings.yaml (env=development)
+2026-04-17 21:45:40 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 21:45:40 | INFO     | src.api.fastapi_app |   Akıllı Lojistik API başlatılıyor...
+2026-04-17 21:45:40 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 21:45:41 | INFO     | src.ml.predictor | Model yükleniyor: C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models\xgboost_delay_model.joblib
+2026-04-17 21:45:50 | INFO     | src.ml.predictor | Model başarıyla yüklendi. Pipeline adımları: ['preprocessor', 'model']
+2026-04-17 21:45:50 | INFO     | src.api.fastapi_app | DelayPredictor yüklendi.
+2026-04-17 21:45:50 | INFO     | src.optimization.route_engine | RouteOptimizer başlatıldı.
+2026-04-17 21:45:50 | INFO     | src.api.fastapi_app | RouteOptimizer hazır.
+2026-04-17 21:45:50 | WARNING  | src.data_ingestion.api_client | OpenWeather API key bulunamadı. OPENWEATHER_API_KEY env değişkenini veya settings.yaml'ı ayarla. Mock veri kullanılacak.
+2026-04-17 21:45:50 | INFO     | src.data_ingestion.api_client | LiveWeatherClient başlatıldı. API key: (YOK)
+2026-04-17 21:45:50 | INFO     | src.api.fastapi_app | LiveWeatherClient hazır.
+2026-04-17 21:45:50 | INFO     | src.api.fastapi_app | API başlatma tamamlandı. http://localhost:8000/docs
+2026-04-17 21:46:15 | INFO     | src.data_ingestion.api_client | Mock hava durumu kullanılıyor (API key eksik).
+2026-04-17 21:46:15 | INFO     | src.optimization.route_engine | ──────────────────────────────────────────────────────────
+2026-04-17 21:46:15 | INFO     | src.optimization.route_engine | Optimizasyon başlıyor: RT-0001 (9 durak)
+2026-04-17 21:46:15 | INFO     | src.optimization.route_engine | Tortuosity Factor: 1.0000
+2026-04-17 21:46:15 | INFO     | src.optimization.route_engine | Distance Matrix oluşturuldu: 9×9 (72 hesaplama, 0.004 sn)
+2026-04-17 21:46:15 | INFO     | src.optimization.route_engine | DelayPredictor ML modeli yüklendi.
+2026-04-17 21:46:15 | INFO     | src.optimization.route_engine | Tam permutasyon başlıyor: 9! = 362880 permutasyon (sabit=0)

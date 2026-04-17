@@ -466,7 +466,8 @@ class RouteOptimizer:
       • N_mobil ≤ MAX_EXACT_PERM_STOPS → Tam permutasyon (garanti optimal)
       • N_mobil  > MAX_EXACT_PERM_STOPS → 2-opt yerel arama (hızlı yaklaşık)
 
-    (N_mobil = toplam durak sayısı - 1 anchor)
+    Varsayılan davranış: tüm duraklar mobil (sabit durak yok).
+    fixed_positions ile opsiyonel pozisyon kilitleme yapılabilir.
     """
 
     def __init__(self, config: Optional[Config] = None):
@@ -483,6 +484,7 @@ class RouteOptimizer:
         route_id: str,
         stops_df: pd.DataFrame,
         departure_time: Optional[pd.Timestamp] = None,
+        fixed_positions: Optional[frozenset[int]] = None,
     ) -> OptimizationResult:
         """
         Tek bir rotayı optimize eder.
@@ -516,9 +518,10 @@ class RouteOptimizer:
             adapter = RouteDistanceAdapter(tortuosity_factor=tf)
             matrix  = DistanceMatrix(stop_points, adapter)
 
-            # 5. Anchor Point — 1. durak sabit (Kural 1)
-            anchor_idx   = 0                          # matris pozisyonu
-            mobile_idxs  = list(range(1, len(stop_points)))  # optimize edilecek
+            # 5. Dinamik durak konfigürasyonu (Kural 1 — Flexible Constraints)
+            fixed_pos    = frozenset(fixed_positions or set())   # 0-tabanlı pozisyon
+            all_idxs     = list(range(len(stop_points)))
+            mobile_count = sum(1 for p in all_idxs if p not in fixed_pos)
 
             # 6. Hareket zamanı
             dep_time = departure_time or pd.Timestamp.now()
@@ -530,18 +533,18 @@ class RouteOptimizer:
             obj = ObjectiveFunction(matrix, stop_points, predictor, dep_time)
 
             # 9. Orijinal sıranın maliyetini hesapla
-            original_seq  = [anchor_idx] + mobile_idxs
+            original_seq  = all_idxs
             original_eval = obj.evaluate(original_seq)
 
             # 10. Optimizasyon algoritmasını seç ve çalıştır
-            if len(mobile_idxs) <= MAX_EXACT_PERM_STOPS:
+            if mobile_count <= MAX_EXACT_PERM_STOPS:
                 algorithm     = "exact_permutation"
                 best_seq, best_eval = self._exact_permutation(
-                    anchor_idx, mobile_idxs, obj
+                    all_idxs, fixed_pos, obj
                 )
             else:
                 algorithm     = "two_opt"
-                best_seq, best_eval = self._two_opt(original_seq, obj)
+                best_seq, best_eval = self._two_opt(all_idxs, fixed_pos, obj)
 
             # 11. Sonuç oluştur
             elapsed = time.perf_counter() - t_start
@@ -612,30 +615,37 @@ class RouteOptimizer:
     # ──────────────────────────────────────────────────────────
     def _exact_permutation(
         self,
-        anchor_idx: int,
-        mobile_idxs: list[int],
+        all_idxs: list[int],
+        fixed_pos: frozenset[int],
         obj: ObjectiveFunction,
     ) -> tuple[list[int], dict]:
         """
         Tüm permutasyonları dener; en düşük maliyetli sırayı döner.
-        Anchor daima başta sabit tutulur (Kural 1).
+        fixed_pos'taki pozisyonlar sabit kalır; geri kalanlar permüte edilir.
+        Varsayılan (fixed_pos=∅): tüm duraklar permüte edilir.
 
-        N_mobile! permutasyon sayısı → küçük N için garantili optimal.
+        N_mobile! permutasyon → küçük N için garantili optimal.
         """
-        best_seq  = [anchor_idx] + mobile_idxs
-        best_eval = obj.evaluate(best_seq)
+        mobile_pos  = [p for p in range(len(all_idxs)) if p not in fixed_pos]
+        mobile_vals = [all_idxs[p] for p in mobile_pos]
 
+        best_seq  = all_idxs[:]
+        best_eval = obj.evaluate(best_seq)
         n_perms   = 0
+
         logger.info(
-            "Tam permutasyon başlıyor: %d! = %d permutasyon",
-            len(mobile_idxs),
-            _factorial(len(mobile_idxs)),
+            "Tam permutasyon başlıyor: %d! = %d permutasyon (sabit=%d)",
+            len(mobile_vals),
+            _factorial(len(mobile_vals)),
+            len(fixed_pos),
         )
 
-        for perm in itertools.permutations(mobile_idxs):
-            candidate  = [anchor_idx] + list(perm)
+        for perm in itertools.permutations(mobile_vals):
+            candidate = all_idxs[:]
+            for pos, val in zip(mobile_pos, perm):
+                candidate[pos] = val
             candidate_eval = obj.evaluate(candidate)
-            n_perms   += 1
+            n_perms += 1
 
             if candidate_eval["cost"] < best_eval["cost"]:
                 best_eval = candidate_eval
@@ -658,13 +668,15 @@ class RouteOptimizer:
     def _two_opt(
         self,
         initial_seq: list[int],
+        fixed_pos: frozenset[int],
         obj: ObjectiveFunction,
         max_iterations: int = 500,
     ) -> tuple[list[int], dict]:
         """
         2-opt yerel arama; büyük rotalarda (N > MAX_EXACT_PERM_STOPS)
         makul sürede kaliteli çözüm üretir.
-        Anchor (index 0) hiçbir zaman yer değiştirmez.
+        Varsayılan (fixed_pos=∅): tüm pozisyonlar yer değiştirebilir.
+        fixed_pos içindeki pozisyonlar hiçbir tersine çevirme işlemine dahil edilmez.
         """
         best_seq  = initial_seq[:]
         best_eval = obj.evaluate(best_seq)
@@ -672,17 +684,19 @@ class RouteOptimizer:
         iteration = 0
 
         logger.info(
-            "2-opt yerel arama başlıyor: %d durak, başlangıç cost=%.2f",
-            len(best_seq), best_eval["cost"],
+            "2-opt yerel arama başlıyor: %d durak, başlangıç cost=%.2f (sabit=%d)",
+            len(best_seq), best_eval["cost"], len(fixed_pos),
         )
 
         while improved and iteration < max_iterations:
             improved  = False
             iteration += 1
 
-            # Anchor (pos=0) dokunulmaz → range(1, n-1)
-            for i in range(1, len(best_seq) - 1):
+            for i in range(0, len(best_seq) - 1):
                 for j in range(i + 1, len(best_seq)):
+                    # Aralıkta sabit pozisyon varsa bu swap atlanır
+                    if any(p in fixed_pos for p in range(i, j + 1)):
+                        continue
                     candidate     = best_seq[:i] + best_seq[i:j + 1][::-1] + best_seq[j + 1:]
                     candidate_eval = obj.evaluate(candidate)
 
