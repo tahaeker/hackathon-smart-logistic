@@ -339,7 +339,11 @@ class ObjectiveFunction:
         self.stops          = stops
         self.predictor      = predictor
         self.departure_time = departure_time
-        self._cache: dict[tuple, float] = {}   # permutation tuple → maliyet
+        self._cache: dict[tuple, float] = {}
+        # Pre-compute DataFrame column names once — avoids per-permutation inference overhead
+        self._feature_cols: Optional[list[str]] = (
+            list(self._build_feature_row(stops[0], 0, 0.0).keys()) if stops else None
+        )
 
     def evaluate(self, sequence: list[int]) -> dict[str, float]:
         """
@@ -387,52 +391,60 @@ class ObjectiveFunction:
         self, sequence: list[int], total_travel_min: float
     ) -> tuple[float, int]:
         """
-        ML modeli (DelayPredictor) ile her durağın gecikme tahminini yapar
-        ve kaçırılan zaman penceresi sayısını hesaplar.
+        Tüm durak feature'larını tek bir DataFrame'e toplar ve
+        predict_batch() ile tek seferde tahmin yapar (N ayrı çağrı yerine 1).
+        Zaman penceresi kontrolü tahmin sonrasında sıralı yapılır.
 
         Returns:
             (toplam_gecikme_dk, missed_time_window_sayısı)
         """
-        total_delay   = 0.0
-        missed        = 0
-        current_time  = self.departure_time
-        cum_delay     = 0.0
+        # Geçiş 1: tüm durakların feature satırlarını topla
+        travel_times: list[float] = []
+        rows: list[dict]          = []
 
         for pos, mat_idx in enumerate(sequence):
-            stop = self.stops[mat_idx]
-
-            # Bir önceki durağa olan seyahat süresi
+            stop   = self.stops[mat_idx]
             travel = (
                 self.matrix.minutes(sequence[pos - 1], mat_idx)
                 if pos > 0 else 0.0
             )
-            current_time = current_time + pd.Timedelta(minutes=travel)
+            travel_times.append(travel)
+            rows.append(self._build_feature_row(stop, pos, travel))
 
-            # ML feature'larını hazırla
-            feature_row = self._build_feature_row(stop, pos, travel, cum_delay)
+        # Geçiş 2: batch tahmin (1 çağrı, N satır)
+        try:
+            feature_df  = pd.DataFrame(rows, columns=self._feature_cols)
+            predictions = self.predictor.predict_batch(feature_df)
+            delay_vals  = predictions.clip(lower=0).tolist()
+        except Exception:
+            delay_vals = [
+                self.stops[stop_idx].delay_probability * 15.0
+                for stop_idx in sequence
+            ]
 
-            # DelayPredictor tahmini
-            try:
-                pred = self.predictor.predict(feature_row)
-                stop_delay = pred.get("predicted_delay_min") or 0.0
-                stop_delay = max(0.0, float(stop_delay))
-            except Exception:
-                stop_delay = stop.delay_probability * 15.0   # fallback: prob × 15 dk
+        # Geçiş 3: varış zamanları ve zaman penceresi kontrolü
+        total_delay  = 0.0
+        missed       = 0
+        current_time = self.departure_time
 
+        for pos, mat_idx in enumerate(sequence):
+            stop       = self.stops[mat_idx]
+            current_time = current_time + pd.Timedelta(minutes=travel_times[pos])
+
+            stop_delay   = float(delay_vals[pos])
             total_delay += stop_delay
-            cum_delay   += stop_delay
-            current_time = current_time + pd.Timedelta(minutes=stop.planned_service_min + stop_delay)
+            current_time = current_time + pd.Timedelta(
+                minutes=stop.planned_service_min + stop_delay
+            )
 
-            # Zaman penceresi kontrolü
-            if stop.time_window_close is not None:
-                if current_time > stop.time_window_close:
-                    missed += 1
-                    logger.debug(
-                        "  TW kaçırıldı: %s (varış=%s, pencere=%s)",
-                        stop.stop_id,
-                        current_time.strftime("%H:%M"),
-                        stop.time_window_close.strftime("%H:%M"),
-                    )
+            if stop.time_window_close is not None and current_time > stop.time_window_close:
+                missed += 1
+                logger.debug(
+                    "  TW kaçırıldı: %s (varış=%s, pencere=%s)",
+                    stop.stop_id,
+                    current_time.strftime("%H:%M"),
+                    stop.time_window_close.strftime("%H:%M"),
+                )
 
         return round(total_delay, 2), missed
 
@@ -441,15 +453,13 @@ class ObjectiveFunction:
         stop: StopPoint,
         position: int,
         travel_min: float,
-        cum_delay: float,
     ) -> dict:
         """ML için feature satırı oluşturur."""
-        base = dict(stop.features)   # preprocessor'dan gelen öznitelikler
+        base = dict(stop.features)
         base.update({
-            "stop_sequence":        position + 1,
-            "planned_travel_min":   travel_min,
-            "cumulative_delay_at_stop": cum_delay,
-            "delay_probability":    stop.delay_probability,
+            "stop_sequence":      position + 1,
+            "planned_travel_min": travel_min,
+            "delay_probability":  stop.delay_probability,
         })
         return base
 
@@ -521,7 +531,7 @@ class RouteOptimizer:
             # 5. Dinamik durak konfigürasyonu (Kural 1 — Flexible Constraints)
             fixed_pos    = frozenset(fixed_positions or set())   # 0-tabanlı pozisyon
             all_idxs     = list(range(len(stop_points)))
-            mobile_count = sum(1 for p in all_idxs if p not in fixed_pos)
+            mobile_count = len(stop_points) - len(fixed_pos)
 
             # 6. Hareket zamanı
             dep_time = departure_time or pd.Timestamp.now()
@@ -695,7 +705,7 @@ class RouteOptimizer:
             for i in range(0, len(best_seq) - 1):
                 for j in range(i + 1, len(best_seq)):
                     # Aralıkta sabit pozisyon varsa bu swap atlanır
-                    if any(p in fixed_pos for p in range(i, j + 1)):
+                    if fixed_pos and any(p in fixed_pos for p in range(i, j + 1)):
                         continue
                     candidate     = best_seq[:i] + best_seq[i:j + 1][::-1] + best_seq[j + 1:]
                     candidate_eval = obj.evaluate(candidate)

@@ -164,7 +164,7 @@ class SpatialTemporalJoiner:
             route_cols = [
                 "route_id", "vehicle_type", "weather_condition",
                 "traffic_level", "road_incident", "incident_severity",
-                "overall_delay_factor", "temperature_c", "precipitation_mm",
+                "temperature_c", "precipitation_mm",
                 "wind_speed_kmh", "humidity_pct", "visibility_km",
             ]
             available = [c for c in route_cols if c in routes.columns]
@@ -383,8 +383,6 @@ class FeatureEngineer:
     ─ Trafik    : speed_ratio, congestion_category,
                   congestion_delay_factor
     ─ Mekansal  : distance_to_next_stop (rota içi hesaplama)
-    ─ Gecikmeler: delay_ratio (actual/planned), is_delayed,
-                  cumulative_delay_at_stop
     ─ Paket     : weight_per_package
     """
 
@@ -639,32 +637,15 @@ class FeatureEngineer:
     # ──────────────────────────────────────────────────────────
     def _delay_features(self, df: pd.DataFrame) -> pd.DataFrame:
         """
-        delay_ratio     : actual_travel / planned_travel.
-        is_delayed      : delay_at_stop_min > 0.
-        cumulative_delay: rota içinde biriken toplam gecikme (dakika).
+        Yalnızca inference zamanında da erişilebilen planned değerleri işler.
+        actual_travel_min / delay_at_stop_min kullanan türetmeler (delay_ratio,
+        cumulative_delay_at_stop, is_delayed) kasıtlı olarak hesaplanmaz —
+        bunlar canlı tahmin sırasında bilinmez ve veri sızıntısı yaratır.
         """
         try:
-            for col in ["planned_travel_min", "actual_travel_min", "delay_at_stop_min"]:
+            for col in ["planned_travel_min", "delay_at_stop_min"]:
                 if col in df.columns:
                     df[col] = pd.to_numeric(df[col], errors="coerce")
-
-            # delay_ratio
-            planned = df.get("planned_travel_min", pd.Series(np.nan, index=df.index))
-            actual  = df.get("actual_travel_min", pd.Series(np.nan, index=df.index))
-            safe_planned = planned.replace(0, np.nan)
-            df["delay_ratio"] = (actual / safe_planned).clip(0, 5).round(4)
-
-            # is_delayed
-            if "delay_at_stop_min" in df.columns:
-                df["is_delayed"] = (df["delay_at_stop_min"] > 0).astype(int)
-
-            # Kümülatif gecikme (rota içi)
-            if "route_id" in df.columns and "delay_at_stop_min" in df.columns:
-                df = df.sort_values(["route_id", "stop_sequence"]) \
-                       if "stop_sequence" in df.columns else df
-                df["cumulative_delay_at_stop"] = df.groupby("route_id")[
-                    "delay_at_stop_min"
-                ].cumsum()
 
             logger.debug("Gecikme öznitelikleri üretildi.")
         except Exception as exc:
@@ -746,8 +727,7 @@ if __name__ == "__main__":
     # Üretilen feature kontrolü
     expected = [
         "time_of_day_category", "weather_severity_index",
-        "distance_to_next_stop", "delay_ratio", "is_delayed",
-        "congestion_delay_factor", "weight_per_package",
+        "distance_to_next_stop", "congestion_delay_factor", "weight_per_package",
     ]
     for feat in expected:
         status = "OK" if feat in features.columns else "EKSIK"

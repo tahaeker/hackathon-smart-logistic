@@ -152,8 +152,7 @@ def step_preprocess(
     # Üretilen anahtar feature'ları kontrol et
     key_features = [
         "time_of_day_category", "weather_severity_index",
-        "distance_to_next_stop", "delay_ratio",
-        "is_delayed", "congestion_delay_factor",
+        "distance_to_next_stop", "congestion_delay_factor",
         "weight_per_package",
     ]
     missing_feats = [f for f in key_features if f not in features.columns]

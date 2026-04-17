@@ -9724,3 +9724,446 @@ ValueError: columns are missing: {'delay_ratio', 'speed_ratio', 'weather_conditi
 2026-04-17 21:46:15 | INFO     | src.optimization.route_engine | Distance Matrix oluşturuldu: 9×9 (72 hesaplama, 0.004 sn)
 2026-04-17 21:46:15 | INFO     | src.optimization.route_engine | DelayPredictor ML modeli yüklendi.
 2026-04-17 21:46:15 | INFO     | src.optimization.route_engine | Tam permutasyon başlıyor: 9! = 362880 permutasyon (sabit=0)
+2026-04-17 22:40:38 | INFO     | Config | Konfigürasyon yüklendi: settings.yaml (env=development)
+2026-04-17 22:40:38 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 22:40:38 | INFO     | src.api.fastapi_app |   Akıllı Lojistik API başlatılıyor...
+2026-04-17 22:40:38 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 22:40:38 | INFO     | src.ml.predictor | Model yükleniyor: C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models\xgboost_delay_model.joblib
+2026-04-17 22:40:48 | INFO     | src.ml.predictor | Model başarıyla yüklendi. Pipeline adımları: ['preprocessor', 'model']
+2026-04-17 22:40:48 | INFO     | src.api.fastapi_app | DelayPredictor yüklendi.
+2026-04-17 22:40:48 | INFO     | src.optimization.route_engine | RouteOptimizer başlatıldı.
+2026-04-17 22:40:48 | INFO     | src.api.fastapi_app | RouteOptimizer hazır.
+2026-04-17 22:40:48 | WARNING  | src.data_ingestion.api_client | OpenWeather API key bulunamadı. OPENWEATHER_API_KEY env değişkenini veya settings.yaml'ı ayarla. Mock veri kullanılacak.
+2026-04-17 22:40:48 | INFO     | src.data_ingestion.api_client | LiveWeatherClient başlatıldı. API key: (YOK)
+2026-04-17 22:40:48 | INFO     | src.api.fastapi_app | LiveWeatherClient hazır.
+2026-04-17 22:40:48 | INFO     | src.api.fastapi_app | API başlatma tamamlandı. http://localhost:8000/docs
+2026-04-17 22:41:43 | INFO     | src.data_ingestion.api_client | Mock hava durumu kullanılıyor (API key eksik).
+2026-04-17 22:41:43 | INFO     | src.optimization.route_engine | ──────────────────────────────────────────────────────────
+2026-04-17 22:41:43 | INFO     | src.optimization.route_engine | Optimizasyon başlıyor: RT-0001 (9 durak)
+2026-04-17 22:41:43 | INFO     | src.optimization.route_engine | Tortuosity Factor: 1.0000
+2026-04-17 22:41:43 | INFO     | src.optimization.route_engine | Distance Matrix oluşturuldu: 9×9 (72 hesaplama, 0.005 sn)
+2026-04-17 22:41:43 | INFO     | src.optimization.route_engine | DelayPredictor ML modeli yüklendi.
+2026-04-17 22:41:44 | INFO     | src.optimization.route_engine | Tam permutasyon başlıyor: 9! = 362880 permutasyon (sabit=0)
+2026-04-17 22:46:05 | INFO     | Config | Konfigürasyon yüklendi: settings.yaml (env=development)
+2026-04-17 22:47:26 | INFO     | Config | Konfigürasyon yüklendi: settings.yaml (env=development)
+2026-04-17 22:47:26 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 22:47:26 | INFO     | src.api.fastapi_app |   Akıllı Lojistik API başlatılıyor...
+2026-04-17 22:47:26 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 22:47:26 | INFO     | src.ml.predictor | Model yükleniyor: C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models\xgboost_delay_model.joblib
+2026-04-17 22:47:29 | INFO     | src.ml.predictor | Model başarıyla yüklendi. Pipeline adımları: ['preprocessor', 'model']
+2026-04-17 22:47:29 | INFO     | src.api.fastapi_app | DelayPredictor yüklendi.
+2026-04-17 22:47:29 | INFO     | src.optimization.route_engine | RouteOptimizer başlatıldı.
+2026-04-17 22:47:29 | INFO     | src.api.fastapi_app | RouteOptimizer hazır.
+2026-04-17 22:47:30 | WARNING  | src.data_ingestion.api_client | OpenWeather API key bulunamadı. OPENWEATHER_API_KEY env değişkenini veya settings.yaml'ı ayarla. Mock veri kullanılacak.
+2026-04-17 22:47:30 | INFO     | src.data_ingestion.api_client | LiveWeatherClient başlatıldı. API key: (YOK)
+2026-04-17 22:47:30 | INFO     | src.api.fastapi_app | LiveWeatherClient hazır.
+2026-04-17 22:47:30 | INFO     | src.api.fastapi_app | API başlatma tamamlandı. http://localhost:8000/docs
+2026-04-17 22:48:11 | INFO     | src.data_ingestion.api_client | Mock hava durumu kullanılıyor (API key eksik).
+2026-04-17 22:48:11 | INFO     | src.optimization.route_engine | ──────────────────────────────────────────────────────────
+2026-04-17 22:48:11 | INFO     | src.optimization.route_engine | Optimizasyon başlıyor: RT-0018 (4 durak)
+2026-04-17 22:48:11 | INFO     | src.optimization.route_engine | Tortuosity Factor: 1.0000
+2026-04-17 22:48:11 | INFO     | src.optimization.route_engine | Distance Matrix oluşturuldu: 4×4 (12 hesaplama, 0.001 sn)
+2026-04-17 22:48:11 | INFO     | src.optimization.route_engine | DelayPredictor ML modeli yüklendi.
+2026-04-17 22:48:12 | INFO     | src.optimization.route_engine | Tam permutasyon başlıyor: 4! = 24 permutasyon (sabit=0)
+2026-04-17 22:48:15 | INFO     | src.optimization.route_engine | Tam permutasyon tamamlandı: 24 denendi | en iyi cost=209.87 | missed_tw=1
+2026-04-17 22:48:15 | INFO     | src.optimization.route_engine | 
+══════════════════════════════════════════════════════════
+  Rota: RT-0018  |  Algoritma: exact_permutation
+──────────────────────────────────────────────────────────
+  Tortuosity Faktörü     : 1.0000
+  Orijinal  süre         : 146.5 dk
+  Optimize  süre         : 118.4 dk  (-19.2% iyileşme)
+  Orijinal  gecikme      : 76.8 dk
+  Optimize  gecikme      : 61.5 dk
+  Orijinal  kaçırılan TW : 4
+  Optimize  kaçırılan TW : 1
+  Hesaplama süresi       : 3.289 sn
+══════════════════════════════════════════════════════════
+2026-04-17 22:48:15 | INFO     | src.api.fastapi_app | POST /optimize | route=RT-0018 | kazanılan=28.2 dk | TW iyileşme=4→1 | 3305ms
+2026-04-17 22:51:01 | INFO     | src.data_ingestion.api_client | Mock hava durumu kullanılıyor (API key eksik).
+2026-04-17 22:51:01 | INFO     | src.api.fastapi_app | POST /predict | lat=39.7110 lon=37.3925 | delay=26.87 dk | 34ms
+2026-04-17 22:51:10 | INFO     | src.data_ingestion.api_client | Mock hava durumu kullanılıyor (API key eksik).
+2026-04-17 22:51:10 | INFO     | src.optimization.route_engine | ──────────────────────────────────────────────────────────
+2026-04-17 22:51:10 | INFO     | src.optimization.route_engine | Optimizasyon başlıyor: RT-0156 (5 durak)
+2026-04-17 22:51:10 | INFO     | src.optimization.route_engine | Tortuosity Factor: 1.0001
+2026-04-17 22:51:10 | INFO     | src.optimization.route_engine | Distance Matrix oluşturuldu: 5×5 (20 hesaplama, 0.001 sn)
+2026-04-17 22:51:10 | INFO     | src.optimization.route_engine | Tam permutasyon başlıyor: 5! = 120 permutasyon (sabit=0)
+2026-04-17 22:51:17 | INFO     | src.data_ingestion.api_client | Mock hava durumu kullanılıyor (API key eksik).
+2026-04-17 22:51:17 | INFO     | src.optimization.route_engine | ──────────────────────────────────────────────────────────
+2026-04-17 22:51:17 | INFO     | src.optimization.route_engine | Optimizasyon başlıyor: RT-0156 (5 durak)
+2026-04-17 22:51:17 | INFO     | src.optimization.route_engine | Tortuosity Factor: 1.0001
+2026-04-17 22:51:17 | INFO     | src.optimization.route_engine | Distance Matrix oluşturuldu: 5×5 (20 hesaplama, 0.001 sn)
+2026-04-17 22:51:18 | INFO     | src.optimization.route_engine | Tam permutasyon başlıyor: 5! = 120 permutasyon (sabit=0)
+2026-04-17 22:51:26 | INFO     | src.data_ingestion.api_client | Mock hava durumu kullanılıyor (API key eksik).
+2026-04-17 22:51:26 | INFO     | src.optimization.route_engine | ──────────────────────────────────────────────────────────
+2026-04-17 22:51:26 | INFO     | src.optimization.route_engine | Optimizasyon başlıyor: RT-0156 (5 durak)
+2026-04-17 22:51:26 | INFO     | src.optimization.route_engine | Tortuosity Factor: 1.0001
+2026-04-17 22:51:26 | INFO     | src.optimization.route_engine | Distance Matrix oluşturuldu: 5×5 (20 hesaplama, 0.001 sn)
+2026-04-17 22:51:27 | INFO     | src.optimization.route_engine | Tam permutasyon başlıyor: 5! = 120 permutasyon (sabit=0)
+2026-04-17 22:51:32 | INFO     | src.data_ingestion.api_client | Mock hava durumu kullanılıyor (API key eksik).
+2026-04-17 22:51:32 | INFO     | src.optimization.route_engine | ──────────────────────────────────────────────────────────
+2026-04-17 22:51:32 | INFO     | src.optimization.route_engine | Optimizasyon başlıyor: RT-0156 (5 durak)
+2026-04-17 22:51:32 | INFO     | src.optimization.route_engine | Tortuosity Factor: 1.0001
+2026-04-17 22:51:32 | INFO     | src.optimization.route_engine | Distance Matrix oluşturuldu: 5×5 (20 hesaplama, 0.001 sn)
+2026-04-17 22:51:33 | INFO     | src.optimization.route_engine | Tam permutasyon başlıyor: 5! = 120 permutasyon (sabit=0)
+2026-04-17 22:52:12 | INFO     | src.optimization.route_engine | Tam permutasyon tamamlandı: 120 denendi | en iyi cost=299.10 | missed_tw=2
+2026-04-17 22:52:12 | INFO     | src.optimization.route_engine | 
+══════════════════════════════════════════════════════════
+  Rota: RT-0156  |  Algoritma: exact_permutation
+──────────────────────────────────────────────────────────
+  Tortuosity Faktörü     : 1.0001
+  Orijinal  süre         : 264.6 dk
+  Optimize  süre         : 162.2 dk  (-38.7% iyileşme)
+  Orijinal  gecikme      : 139.7 dk
+  Optimize  gecikme      : 76.9 dk
+  Orijinal  kaçırılan TW : 4
+  Optimize  kaçırılan TW : 2
+  Hesaplama süresi       : 61.752 sn
+══════════════════════════════════════════════════════════
+2026-04-17 22:52:12 | INFO     | src.api.fastapi_app | POST /optimize | route=RT-0156 | kazanılan=102.5 dk | TW iyileşme=4→2 | 61764ms
+2026-04-17 22:52:34 | INFO     | src.optimization.route_engine | Tam permutasyon tamamlandı: 120 denendi | en iyi cost=299.10 | missed_tw=2
+2026-04-17 22:52:34 | INFO     | src.optimization.route_engine | 
+══════════════════════════════════════════════════════════
+  Rota: RT-0156  |  Algoritma: exact_permutation
+──────────────────────────────────────────────────────────
+  Tortuosity Faktörü     : 1.0001
+  Orijinal  süre         : 264.6 dk
+  Optimize  süre         : 162.2 dk  (-38.7% iyileşme)
+  Orijinal  gecikme      : 139.7 dk
+  Optimize  gecikme      : 76.9 dk
+  Orijinal  kaçırılan TW : 4
+  Optimize  kaçırılan TW : 2
+  Hesaplama süresi       : 76.719 sn
+══════════════════════════════════════════════════════════
+2026-04-17 22:52:34 | INFO     | src.api.fastapi_app | POST /optimize | route=RT-0156 | kazanılan=102.5 dk | TW iyileşme=4→2 | 76733ms
+2026-04-17 22:52:38 | INFO     | src.optimization.route_engine | Tam permutasyon tamamlandı: 120 denendi | en iyi cost=299.10 | missed_tw=2
+2026-04-17 22:52:38 | INFO     | src.optimization.route_engine | 
+══════════════════════════════════════════════════════════
+  Rota: RT-0156  |  Algoritma: exact_permutation
+──────────────────────────────────────────────────────────
+  Tortuosity Faktörü     : 1.0001
+  Orijinal  süre         : 264.6 dk
+  Optimize  süre         : 162.2 dk  (-38.7% iyileşme)
+  Orijinal  gecikme      : 139.7 dk
+  Optimize  gecikme      : 76.9 dk
+  Orijinal  kaçırılan TW : 4
+  Optimize  kaçırılan TW : 2
+  Hesaplama süresi       : 71.784 sn
+══════════════════════════════════════════════════════════
+2026-04-17 22:52:38 | INFO     | src.api.fastapi_app | POST /optimize | route=RT-0156 | kazanılan=102.5 dk | TW iyileşme=4→2 | 71799ms
+2026-04-17 22:52:39 | INFO     | src.optimization.route_engine | Tam permutasyon tamamlandı: 120 denendi | en iyi cost=299.10 | missed_tw=2
+2026-04-17 22:52:39 | INFO     | src.optimization.route_engine | 
+══════════════════════════════════════════════════════════
+  Rota: RT-0156  |  Algoritma: exact_permutation
+──────────────────────────────────────────────────────────
+  Tortuosity Faktörü     : 1.0001
+  Orijinal  süre         : 264.6 dk
+  Optimize  süre         : 162.2 dk  (-38.7% iyileşme)
+  Orijinal  gecikme      : 139.7 dk
+  Optimize  gecikme      : 76.9 dk
+  Orijinal  kaçırılan TW : 4
+  Optimize  kaçırılan TW : 2
+  Hesaplama süresi       : 66.444 sn
+══════════════════════════════════════════════════════════
+2026-04-17 22:52:39 | INFO     | src.api.fastapi_app | POST /optimize | route=RT-0156 | kazanılan=102.5 dk | TW iyileşme=4→2 | 66459ms
+2026-04-17 22:56:57 | INFO     | src.data_ingestion.api_client | Mock hava durumu kullanılıyor (API key eksik).
+2026-04-17 22:56:57 | INFO     | src.api.fastapi_app | POST /predict | lat=39.7110 lon=37.3925 | delay=26.87 dk | 20ms
+2026-04-17 22:58:49 | INFO     | src.api.fastapi_app | API kapatılıyor...
+2026-04-17 22:58:52 | INFO     | Config | Konfigürasyon yüklendi: settings.yaml (env=development)
+2026-04-17 22:58:52 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 22:58:52 | INFO     | src.api.fastapi_app |   Akıllı Lojistik API başlatılıyor...
+2026-04-17 22:58:52 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 22:58:52 | INFO     | src.ml.predictor | Model yükleniyor: C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models\xgboost_delay_model.joblib
+2026-04-17 22:58:54 | INFO     | src.ml.predictor | Model başarıyla yüklendi. Pipeline adımları: ['preprocessor', 'model']
+2026-04-17 22:58:54 | INFO     | src.api.fastapi_app | DelayPredictor yüklendi.
+2026-04-17 22:58:54 | INFO     | src.optimization.route_engine | RouteOptimizer başlatıldı.
+2026-04-17 22:58:54 | INFO     | src.api.fastapi_app | RouteOptimizer hazır.
+2026-04-17 22:58:54 | WARNING  | src.data_ingestion.api_client | OpenWeather API key bulunamadı. OPENWEATHER_API_KEY env değişkenini veya settings.yaml'ı ayarla. Mock veri kullanılacak.
+2026-04-17 22:58:54 | INFO     | src.data_ingestion.api_client | LiveWeatherClient başlatıldı. API key: (YOK)
+2026-04-17 22:58:54 | INFO     | src.api.fastapi_app | LiveWeatherClient hazır.
+2026-04-17 22:58:54 | INFO     | src.api.fastapi_app | API başlatma tamamlandı. http://localhost:8000/docs
+2026-04-17 23:04:56 | INFO     | src.api.fastapi_app | API kapatılıyor...
+2026-04-17 23:04:59 | INFO     | Config | Konfigürasyon yüklendi: settings.yaml (env=development)
+2026-04-17 23:04:59 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:04:59 | INFO     | src.api.fastapi_app |   Akıllı Lojistik API başlatılıyor...
+2026-04-17 23:04:59 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:04:59 | INFO     | src.ml.predictor | Model yükleniyor: C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models\xgboost_delay_model.joblib
+2026-04-17 23:05:00 | INFO     | src.ml.predictor | Model başarıyla yüklendi. Pipeline adımları: ['preprocessor', 'model']
+2026-04-17 23:05:00 | INFO     | src.api.fastapi_app | DelayPredictor yüklendi.
+2026-04-17 23:05:00 | INFO     | src.optimization.route_engine | RouteOptimizer başlatıldı.
+2026-04-17 23:05:00 | INFO     | src.api.fastapi_app | RouteOptimizer hazır.
+2026-04-17 23:05:00 | WARNING  | src.data_ingestion.api_client | OpenWeather API key bulunamadı. OPENWEATHER_API_KEY env değişkenini veya settings.yaml'ı ayarla. Mock veri kullanılacak.
+2026-04-17 23:05:00 | INFO     | src.data_ingestion.api_client | LiveWeatherClient başlatıldı. API key: (YOK)
+2026-04-17 23:05:00 | INFO     | src.api.fastapi_app | LiveWeatherClient hazır.
+2026-04-17 23:05:00 | INFO     | src.api.fastapi_app | API başlatma tamamlandı. http://localhost:8000/docs
+2026-04-17 23:05:12 | INFO     | src.api.fastapi_app | API kapatılıyor...
+2026-04-17 23:05:15 | INFO     | Config | Konfigürasyon yüklendi: settings.yaml (env=development)
+2026-04-17 23:05:15 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:05:15 | INFO     | src.api.fastapi_app |   Akıllı Lojistik API başlatılıyor...
+2026-04-17 23:05:15 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:05:15 | INFO     | src.ml.predictor | Model yükleniyor: C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models\xgboost_delay_model.joblib
+2026-04-17 23:05:17 | INFO     | src.ml.predictor | Model başarıyla yüklendi. Pipeline adımları: ['preprocessor', 'model']
+2026-04-17 23:05:17 | INFO     | src.api.fastapi_app | DelayPredictor yüklendi.
+2026-04-17 23:05:17 | INFO     | src.optimization.route_engine | RouteOptimizer başlatıldı.
+2026-04-17 23:05:17 | INFO     | src.api.fastapi_app | RouteOptimizer hazır.
+2026-04-17 23:05:17 | WARNING  | src.data_ingestion.api_client | OpenWeather API key bulunamadı. OPENWEATHER_API_KEY env değişkenini veya settings.yaml'ı ayarla. Mock veri kullanılacak.
+2026-04-17 23:05:17 | INFO     | src.data_ingestion.api_client | LiveWeatherClient başlatıldı. API key: (YOK)
+2026-04-17 23:05:17 | INFO     | src.api.fastapi_app | LiveWeatherClient hazır.
+2026-04-17 23:05:17 | INFO     | src.api.fastapi_app | API başlatma tamamlandı. http://localhost:8000/docs
+2026-04-17 23:06:03 | INFO     | src.api.fastapi_app | API kapatılıyor...
+2026-04-17 23:06:07 | INFO     | Config | Konfigürasyon yüklendi: settings.yaml (env=development)
+2026-04-17 23:06:07 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:06:07 | INFO     | src.api.fastapi_app |   Akıllı Lojistik API başlatılıyor...
+2026-04-17 23:06:07 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:06:07 | INFO     | src.ml.predictor | Model yükleniyor: C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models\xgboost_delay_model.joblib
+2026-04-17 23:06:08 | INFO     | src.ml.predictor | Model başarıyla yüklendi. Pipeline adımları: ['preprocessor', 'model']
+2026-04-17 23:06:08 | INFO     | src.api.fastapi_app | DelayPredictor yüklendi.
+2026-04-17 23:06:08 | INFO     | src.optimization.route_engine | RouteOptimizer başlatıldı.
+2026-04-17 23:06:08 | INFO     | src.api.fastapi_app | RouteOptimizer hazır.
+2026-04-17 23:06:08 | WARNING  | src.data_ingestion.api_client | OpenWeather API key bulunamadı. OPENWEATHER_API_KEY env değişkenini veya settings.yaml'ı ayarla. Mock veri kullanılacak.
+2026-04-17 23:06:08 | INFO     | src.data_ingestion.api_client | LiveWeatherClient başlatıldı. API key: (YOK)
+2026-04-17 23:06:08 | INFO     | src.api.fastapi_app | LiveWeatherClient hazır.
+2026-04-17 23:06:08 | INFO     | src.api.fastapi_app | API başlatma tamamlandı. http://localhost:8000/docs
+2026-04-17 23:06:49 | INFO     | Config | Konfigürasyon yüklendi: settings.yaml (env=development)
+2026-04-17 23:06:53 | INFO     | main_pipeline | 
+2026-04-17 23:06:53 | INFO     | main_pipeline | ╔══════════════════════════════════════════════════════╗
+2026-04-17 23:06:53 | INFO     | main_pipeline | ║   Akıllı Lojistik — Eğitim Pipeline Başlıyor        ║
+2026-04-17 23:06:53 | INFO     | main_pipeline | ╚══════════════════════════════════════════════════════╝
+2026-04-17 23:06:53 | INFO     | main_pipeline | 
+2026-04-17 23:06:53 | INFO     | main_pipeline | ┌─────────────────────────────────────────────────┐
+2026-04-17 23:06:53 | INFO     | main_pipeline | │  Adım 1/5  █░░░░       │
+2026-04-17 23:06:53 | INFO     | main_pipeline | │  Konfigürasyon Doğrulama                        │
+2026-04-17 23:06:53 | INFO     | main_pipeline | └─────────────────────────────────────────────────┘
+2026-04-17 23:06:53 | INFO     | main_pipeline |   Proje   : Akilli-Lojistik-Rota-Optimizasyonu v1.0.0
+2026-04-17 23:06:53 | INFO     | main_pipeline |   Ortam   : development
+2026-04-17 23:06:53 | INFO     | main_pipeline |   Raw dir : C:\Users\Eliaçık\hackathon-smart-logistic\data\raw
+2026-04-17 23:06:53 | INFO     | main_pipeline |   Model   : C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models
+2026-04-17 23:06:53 | INFO     | main_pipeline |   Reports : C:\Users\Eliaçık\hackathon-smart-logistic\outputs\reports
+2026-04-17 23:06:53 | INFO     | main_pipeline |   ✓  Tüm CSV dosyaları mevcut.
+2026-04-17 23:06:53 | INFO     | main_pipeline |   ──── Adım 1 tamamlandı (0.00s)
+2026-04-17 23:06:53 | INFO     | main_pipeline | 
+2026-04-17 23:06:53 | INFO     | main_pipeline | ┌─────────────────────────────────────────────────┐
+2026-04-17 23:06:53 | INFO     | main_pipeline | │  Adım 2/5  ██░░░       │
+2026-04-17 23:06:53 | INFO     | main_pipeline | │  CSV Dosyaları Yükleniyor                       │
+2026-04-17 23:06:53 | INFO     | main_pipeline | └─────────────────────────────────────────────────┘
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader | CSVReader başlatıldı. Datetime formatı: %Y-%m-%d %H:%M:%S
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader | [routes] Okunuyor: C:\Users\Eliaçık\hackathon-smart-logistic\data\raw\routes.csv
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader | [routes] 200 satır, 22 kolon yüklendi.
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader | [route_stops] Okunuyor: C:\Users\Eliaçık\hackathon-smart-logistic\data\raw\route_stops.csv
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader | [route_stops] 1451 satır, 20 kolon yüklendi.
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader | [traffic_segments] Okunuyor: C:\Users\Eliaçık\hackathon-smart-logistic\data\raw\traffic_segments.csv
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader | [traffic_segments] 500 satır, 15 kolon yüklendi.
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader | [weather_observations] Okunuyor: C:\Users\Eliaçık\hackathon-smart-logistic\data\raw\weather_observations.csv
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader | [weather_observations] 300 satır, 18 kolon yüklendi.
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader | [historical_delay_stats] Okunuyor: C:\Users\Eliaçık\hackathon-smart-logistic\data\raw\historical_delay_stats.csv
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader | [historical_delay_stats] 480 satır, 12 kolon yüklendi.
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader | Yükleme tamamlandı. Başarılı: ['routes', 'route_stops', 'traffic_segments', 'weather_observations', 'historical_delay_stats'] | Başarısız: []
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader | ============================================================
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader | CSV YÜKLEME ÖZETİ
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader | ============================================================
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader |   routes                         →    200 satır |  22 kolon | 0 null
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader |   route_stops                    →   1451 satır |  20 kolon | 0 null
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader |   traffic_segments               →    500 satır |  15 kolon | 0 null
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader |   weather_observations           →    300 satır |  18 kolon | 0 null
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader |   historical_delay_stats         →    480 satır |  12 kolon | 0 null
+2026-04-17 23:06:53 | INFO     | src.data_ingestion.csv_reader | ============================================================
+2026-04-17 23:06:53 | INFO     | main_pipeline |   Yüklenen tablolar  : ['routes', 'route_stops', 'traffic_segments', 'weather_observations', 'historical_delay_stats']
+2026-04-17 23:06:53 | INFO     | main_pipeline |   Toplam satır       : 2931
+2026-04-17 23:06:53 | INFO     | main_pipeline |   ──── Adım 2 tamamlandı (0.14s)
+2026-04-17 23:06:53 | INFO     | main_pipeline | 
+2026-04-17 23:06:53 | INFO     | main_pipeline | ┌─────────────────────────────────────────────────┐
+2026-04-17 23:06:53 | INFO     | main_pipeline | │  Adım 3/5  ███░░       │
+2026-04-17 23:06:53 | INFO     | main_pipeline | │  Ön İşleme & Feature Engineering                │
+2026-04-17 23:06:53 | INFO     | main_pipeline | └─────────────────────────────────────────────────┘
+2026-04-17 23:06:53 | INFO     | main_pipeline |   Spatial-Temporal Join başlıyor...
+2026-04-17 23:06:53 | INFO     | src.features.preprocessor | SpatialTemporalJoiner başlatıldı.
+2026-04-17 23:06:56 | INFO     | src.features.preprocessor | Hava durumu birleştirmesi tamamlandı. Eşleşen satır: 368 / 1451
+2026-04-17 23:06:57 | INFO     | src.features.preprocessor | Trafik birleştirmesi tamamlandı. Eşleşen satır: 1393 / 1451
+2026-04-17 23:06:57 | INFO     | src.features.preprocessor | Birleştirme tamamlandı. Sonuç: 1451 satır, 50 kolon.
+2026-04-17 23:06:57 | INFO     | src.features.preprocessor | FeatureEngineer başlatıldı.
+2026-04-17 23:06:58 | INFO     | src.features.preprocessor | Feature engineering tamamlandı. Toplam kolon: 67 | Yeni feature sayısı tahmini: ~67
+2026-04-17 23:06:58 | INFO     | main_pipeline |   Sonuç shape      : 1451 satır × 67 kolon
+2026-04-17 23:06:58 | INFO     | main_pipeline |   Datetime kolonlar: 4
+2026-04-17 23:06:58 | INFO     | main_pipeline |   Numeric kolonlar : 50
+2026-04-17 23:06:58 | INFO     | main_pipeline |   Kategori kolonlar: 13
+2026-04-17 23:06:58 | INFO     | main_pipeline |   Toplam null      : 16967
+2026-04-17 23:06:58 | WARNING  | main_pipeline |   ⚠  Eksik feature'lar: ['delay_ratio', 'is_delayed']
+2026-04-17 23:06:58 | INFO     | main_pipeline |   Feature cache kaydedildi: C:\Users\Eliaçık\hackathon-smart-logistic\data\processed\features_cache.parquet
+2026-04-17 23:06:58 | INFO     | main_pipeline |   ──── Adım 3 tamamlandı (5.18s)
+2026-04-17 23:06:58 | INFO     | main_pipeline | 
+2026-04-17 23:06:58 | INFO     | main_pipeline | ┌─────────────────────────────────────────────────┐
+2026-04-17 23:06:58 | INFO     | main_pipeline | │  Adım 4/5  ████░       │
+2026-04-17 23:06:58 | INFO     | main_pipeline | │  XGBoost Model Eğitimi                          │
+2026-04-17 23:06:58 | INFO     | main_pipeline | └─────────────────────────────────────────────────┘
+2026-04-17 23:06:58 | INFO     | main_pipeline |   Target kolon     : delay_at_stop_min
+2026-04-17 23:06:58 | INFO     | main_pipeline |   Geçerli satır    : 1451 / 1451 (100.0%)
+2026-04-17 23:06:58 | INFO     | main_pipeline |   Target istatistikleri:
+2026-04-17 23:06:58 | INFO     | main_pipeline |     min=-2.90  ortalama=32.71  max=314.20  std=37.26
+2026-04-17 23:06:58 | INFO     | main_pipeline |   XGBoost Pipeline eğitimi başlıyor...
+2026-04-17 23:06:58 | INFO     | src.ml.trainer | DelayModelTrainer başlatıldı.
+2026-04-17 23:06:58 | INFO     | src.ml.trainer | ============================================================
+2026-04-17 23:06:58 | INFO     | src.ml.trainer | MODEL EĞİTİMİ BAŞLIYOR
+2026-04-17 23:06:58 | INFO     | src.ml.trainer | ============================================================
+2026-04-17 23:06:58 | INFO     | src.ml.trainer | Feature hazırlama: 35 numeric + 11 categorical = 46 toplam
+2026-04-17 23:06:58 | INFO     | src.ml.trainer | Train/test split: 1160/291 (test_size=20%)
+2026-04-17 23:06:58 | INFO     | src.ml.trainer | Pipeline inşa edildi: 35 numeric + 11 categorical feature
+2026-04-17 23:06:58 | INFO     | src.ml.trainer | XGBoost eğitimi başlıyor... (train=1160, test=291)
+2026-04-17 23:07:00 | INFO     | src.ml.trainer | Eğitim tamamlandı.
+2026-04-17 23:07:00 | INFO     | src.ml.trainer | [TRAIN] MAE=0.54 dk | RMSE=0.74 dk | R²=0.9996
+2026-04-17 23:07:00 | INFO     | src.ml.trainer | [TEST] MAE=4.04 dk | RMSE=6.53 dk | R²=0.9655
+2026-04-17 23:11:38 | INFO     | src.api.fastapi_app | API kapatılıyor...
+2026-04-17 23:11:40 | INFO     | Config | Konfigürasyon yüklendi: settings.yaml (env=development)
+2026-04-17 23:11:40 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:11:40 | INFO     | src.api.fastapi_app |   Akıllı Lojistik API başlatılıyor...
+2026-04-17 23:11:40 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:11:40 | INFO     | src.ml.predictor | Model yükleniyor: C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models\xgboost_delay_model.joblib
+2026-04-17 23:11:42 | INFO     | src.ml.predictor | Model başarıyla yüklendi. Pipeline adımları: ['preprocessor', 'model']
+2026-04-17 23:11:42 | INFO     | src.api.fastapi_app | DelayPredictor yüklendi.
+2026-04-17 23:11:42 | INFO     | src.optimization.route_engine | RouteOptimizer başlatıldı.
+2026-04-17 23:11:42 | INFO     | src.api.fastapi_app | RouteOptimizer hazır.
+2026-04-17 23:11:42 | WARNING  | src.data_ingestion.api_client | OpenWeather API key bulunamadı. OPENWEATHER_API_KEY env değişkenini veya settings.yaml'ı ayarla. Mock veri kullanılacak.
+2026-04-17 23:11:42 | INFO     | src.data_ingestion.api_client | LiveWeatherClient başlatıldı. API key: (YOK)
+2026-04-17 23:11:42 | INFO     | src.api.fastapi_app | LiveWeatherClient hazır.
+2026-04-17 23:11:42 | INFO     | src.api.fastapi_app | API başlatma tamamlandı. http://localhost:8000/docs
+2026-04-17 23:11:56 | INFO     | src.ml.trainer | [CV 5-Fold] MAE = nan ± nan dk
+2026-04-17 23:11:56 | INFO     | src.ml.trainer | Model kaydedildi: C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models\xgboost_delay_model.joblib
+2026-04-17 23:11:56 | INFO     | src.ml.trainer | Feature importance kaydedildi: C:\Users\Eliaçık\hackathon-smart-logistic\outputs\reports\feature_importance.csv (top-5: ['num__delay_probability', 'num__incident_severity', 'num__planned_travel_min', 'cat__traffic_level_congested', 'cat__traffic_level_low'])
+2026-04-17 23:11:56 | INFO     | src.ml.trainer | Metrikler kaydedildi: C:\Users\Eliaçık\hackathon-smart-logistic\outputs\reports\train_metrics.json
+2026-04-17 23:11:56 | INFO     | src.ml.trainer | ============================================================
+2026-04-17 23:11:56 | INFO     | src.ml.trainer | EĞİTİM SONUÇLARI
+2026-04-17 23:11:56 | INFO     | src.ml.trainer |   Train  MAE : 0.54 dk
+2026-04-17 23:11:56 | INFO     | src.ml.trainer |   Test   MAE : 4.04 dk  ← birincil metrik
+2026-04-17 23:11:56 | INFO     | src.ml.trainer |   Test   RMSE: 6.54 dk
+2026-04-17 23:11:56 | INFO     | src.ml.trainer |   Test   R²  : 0.9655
+2026-04-17 23:11:56 | INFO     | src.ml.trainer |   CV MAE     : nan ± nan dk
+2026-04-17 23:11:56 | INFO     | src.ml.trainer |   Model      : C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models\xgboost_delay_model.joblib
+2026-04-17 23:11:56 | INFO     | src.ml.trainer | ============================================================
+2026-04-17 23:11:56 | INFO     | main_pipeline |   ──── Adım 4 tamamlandı (5.0dk)
+2026-04-17 23:11:56 | INFO     | main_pipeline | 
+2026-04-17 23:11:56 | INFO     | main_pipeline | ┌─────────────────────────────────────────────────┐
+2026-04-17 23:11:56 | INFO     | main_pipeline | │  Adım 5/5  █████       │
+2026-04-17 23:11:56 | INFO     | main_pipeline | │  Pipeline Tamamlandı — Özet Rapor               │
+2026-04-17 23:11:56 | INFO     | main_pipeline | └─────────────────────────────────────────────────┘
+2026-04-17 23:11:56 | INFO     | main_pipeline | 
+2026-04-17 23:11:56 | INFO     | main_pipeline |   ╔══════════════════════════════════════════════╗
+2026-04-17 23:11:56 | INFO     | main_pipeline |   ║            MODEL PERFORMANS METRİKLERİ      ║
+2026-04-17 23:11:56 | INFO     | main_pipeline |   ╠══════════════════════════════════════════════╣
+2026-04-17 23:11:56 | INFO     | main_pipeline |   ║  Train  MAE   :   0.54 dakika               ║
+2026-04-17 23:11:56 | INFO     | main_pipeline |   ║  Test   MAE   :   4.04 dakika  ◄ Ana metrik ║
+2026-04-17 23:11:56 | INFO     | main_pipeline |   ║  Test   RMSE  :   6.54 dakika               ║
+2026-04-17 23:11:56 | INFO     | main_pipeline |   ║  Test   R²    :   0.9655                    ║
+2026-04-17 23:11:56 | INFO     | main_pipeline |   ║  CV MAE (5-K) :    nan ± nan   dakika     ║
+2026-04-17 23:11:56 | INFO     | main_pipeline |   ╠══════════════════════════════════════════════╣
+2026-04-17 23:11:56 | INFO     | main_pipeline |   ║  Eğitim seti  :   1160 satır                ║
+2026-04-17 23:11:56 | INFO     | main_pipeline |   ║  Test seti    :    291 satır                ║
+2026-04-17 23:11:56 | INFO     | main_pipeline |   ╚══════════════════════════════════════════════╝
+2026-04-17 23:11:56 | INFO     | main_pipeline | 
+2026-04-17 23:11:56 | INFO     | main_pipeline |   ✓  MAE < 5 dk — model üretim kalitesinde.
+2026-04-17 23:11:56 | INFO     | main_pipeline | 
+2026-04-17 23:11:56 | INFO     | main_pipeline |   Kaydedilen dosyalar:
+2026-04-17 23:11:56 | INFO     | main_pipeline |     Model  → C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models\xgboost_delay_model.joblib
+2026-04-17 23:11:56 | INFO     | main_pipeline |     FI CSV → C:\Users\Eliaçık\hackathon-smart-logistic\outputs\reports\feature_importance.csv
+2026-04-17 23:11:56 | INFO     | main_pipeline | 
+2026-04-17 23:11:56 | INFO     | main_pipeline |   ⏱  Toplam pipeline süresi: 303.0 saniye
+2026-04-17 23:11:56 | INFO     | main_pipeline | 
+2026-04-17 23:11:56 | INFO     | main_pipeline |   Sonraki adım:
+2026-04-17 23:11:56 | INFO     | main_pipeline |     uvicorn src.api.fastapi_app:app --reload --port 8000
+2026-04-17 23:11:56 | INFO     | main_pipeline | 
+2026-04-17 23:15:25 | INFO     | src.api.fastapi_app | API kapatılıyor...
+2026-04-17 23:15:28 | INFO     | Config | Konfigürasyon yüklendi: settings.yaml (env=development)
+2026-04-17 23:15:28 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:15:28 | INFO     | src.api.fastapi_app |   Akıllı Lojistik API başlatılıyor...
+2026-04-17 23:15:28 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:15:28 | INFO     | src.ml.predictor | Model yükleniyor: C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models\xgboost_delay_model.joblib
+2026-04-17 23:15:30 | INFO     | src.ml.predictor | Model başarıyla yüklendi. Pipeline adımları: ['preprocessor', 'model']
+2026-04-17 23:15:30 | INFO     | src.api.fastapi_app | DelayPredictor yüklendi.
+2026-04-17 23:15:30 | INFO     | src.optimization.route_engine | RouteOptimizer başlatıldı.
+2026-04-17 23:15:30 | INFO     | src.api.fastapi_app | RouteOptimizer hazır.
+2026-04-17 23:15:30 | WARNING  | src.data_ingestion.api_client | OpenWeather API key bulunamadı. OPENWEATHER_API_KEY env değişkenini veya settings.yaml'ı ayarla. Mock veri kullanılacak.
+2026-04-17 23:15:30 | INFO     | src.data_ingestion.api_client | LiveWeatherClient başlatıldı. API key: (YOK)
+2026-04-17 23:15:30 | INFO     | src.api.fastapi_app | LiveWeatherClient hazır.
+2026-04-17 23:15:30 | INFO     | src.api.fastapi_app | API başlatma tamamlandı. http://localhost:8000/docs
+2026-04-17 23:16:49 | INFO     | src.api.fastapi_app | API kapatılıyor...
+2026-04-17 23:16:52 | INFO     | Config | Konfigürasyon yüklendi: settings.yaml (env=development)
+2026-04-17 23:16:52 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:16:52 | INFO     | src.api.fastapi_app |   Akıllı Lojistik API başlatılıyor...
+2026-04-17 23:16:52 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:16:52 | INFO     | src.ml.predictor | Model yükleniyor: C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models\xgboost_delay_model.joblib
+2026-04-17 23:16:54 | INFO     | src.ml.predictor | Model başarıyla yüklendi. Pipeline adımları: ['preprocessor', 'model']
+2026-04-17 23:16:54 | INFO     | src.api.fastapi_app | DelayPredictor yüklendi.
+2026-04-17 23:16:54 | INFO     | src.optimization.route_engine | RouteOptimizer başlatıldı.
+2026-04-17 23:16:54 | INFO     | src.api.fastapi_app | RouteOptimizer hazır.
+2026-04-17 23:16:54 | WARNING  | src.data_ingestion.api_client | OpenWeather API key bulunamadı. OPENWEATHER_API_KEY env değişkenini veya settings.yaml'ı ayarla. Mock veri kullanılacak.
+2026-04-17 23:16:54 | INFO     | src.data_ingestion.api_client | LiveWeatherClient başlatıldı. API key: (YOK)
+2026-04-17 23:16:54 | INFO     | src.api.fastapi_app | LiveWeatherClient hazır.
+2026-04-17 23:16:54 | INFO     | src.api.fastapi_app | API başlatma tamamlandı. http://localhost:8000/docs
+2026-04-17 23:17:01 | INFO     | src.api.fastapi_app | API kapatılıyor...
+2026-04-17 23:17:03 | INFO     | Config | Konfigürasyon yüklendi: settings.yaml (env=development)
+2026-04-17 23:17:03 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:17:03 | INFO     | src.api.fastapi_app |   Akıllı Lojistik API başlatılıyor...
+2026-04-17 23:17:03 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:17:03 | INFO     | src.ml.predictor | Model yükleniyor: C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models\xgboost_delay_model.joblib
+2026-04-17 23:17:04 | INFO     | src.ml.predictor | Model başarıyla yüklendi. Pipeline adımları: ['preprocessor', 'model']
+2026-04-17 23:17:04 | INFO     | src.api.fastapi_app | DelayPredictor yüklendi.
+2026-04-17 23:17:04 | INFO     | src.optimization.route_engine | RouteOptimizer başlatıldı.
+2026-04-17 23:17:04 | INFO     | src.api.fastapi_app | RouteOptimizer hazır.
+2026-04-17 23:17:05 | WARNING  | src.data_ingestion.api_client | OpenWeather API key bulunamadı. OPENWEATHER_API_KEY env değişkenini veya settings.yaml'ı ayarla. Mock veri kullanılacak.
+2026-04-17 23:17:05 | INFO     | src.data_ingestion.api_client | LiveWeatherClient başlatıldı. API key: (YOK)
+2026-04-17 23:17:05 | INFO     | src.api.fastapi_app | LiveWeatherClient hazır.
+2026-04-17 23:17:05 | INFO     | src.api.fastapi_app | API başlatma tamamlandı. http://localhost:8000/docs
+2026-04-17 23:17:10 | INFO     | src.api.fastapi_app | API kapatılıyor...
+2026-04-17 23:17:12 | INFO     | Config | Konfigürasyon yüklendi: settings.yaml (env=development)
+2026-04-17 23:17:12 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:17:12 | INFO     | src.api.fastapi_app |   Akıllı Lojistik API başlatılıyor...
+2026-04-17 23:17:12 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:17:12 | INFO     | src.ml.predictor | Model yükleniyor: C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models\xgboost_delay_model.joblib
+2026-04-17 23:17:13 | INFO     | src.ml.predictor | Model başarıyla yüklendi. Pipeline adımları: ['preprocessor', 'model']
+2026-04-17 23:17:13 | INFO     | src.api.fastapi_app | DelayPredictor yüklendi.
+2026-04-17 23:17:13 | INFO     | src.optimization.route_engine | RouteOptimizer başlatıldı.
+2026-04-17 23:17:13 | INFO     | src.api.fastapi_app | RouteOptimizer hazır.
+2026-04-17 23:17:13 | WARNING  | src.data_ingestion.api_client | OpenWeather API key bulunamadı. OPENWEATHER_API_KEY env değişkenini veya settings.yaml'ı ayarla. Mock veri kullanılacak.
+2026-04-17 23:17:13 | INFO     | src.data_ingestion.api_client | LiveWeatherClient başlatıldı. API key: (YOK)
+2026-04-17 23:17:13 | INFO     | src.api.fastapi_app | LiveWeatherClient hazır.
+2026-04-17 23:17:13 | INFO     | src.api.fastapi_app | API başlatma tamamlandı. http://localhost:8000/docs
+2026-04-17 23:17:18 | INFO     | src.api.fastapi_app | API kapatılıyor...
+2026-04-17 23:17:20 | INFO     | Config | Konfigürasyon yüklendi: settings.yaml (env=development)
+2026-04-17 23:17:20 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:17:20 | INFO     | src.api.fastapi_app |   Akıllı Lojistik API başlatılıyor...
+2026-04-17 23:17:20 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:17:20 | INFO     | src.ml.predictor | Model yükleniyor: C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models\xgboost_delay_model.joblib
+2026-04-17 23:17:23 | INFO     | src.ml.predictor | Model başarıyla yüklendi. Pipeline adımları: ['preprocessor', 'model']
+2026-04-17 23:17:23 | INFO     | src.api.fastapi_app | DelayPredictor yüklendi.
+2026-04-17 23:17:23 | INFO     | src.optimization.route_engine | RouteOptimizer başlatıldı.
+2026-04-17 23:17:23 | INFO     | src.api.fastapi_app | RouteOptimizer hazır.
+2026-04-17 23:17:23 | WARNING  | src.data_ingestion.api_client | OpenWeather API key bulunamadı. OPENWEATHER_API_KEY env değişkenini veya settings.yaml'ı ayarla. Mock veri kullanılacak.
+2026-04-17 23:17:23 | INFO     | src.data_ingestion.api_client | LiveWeatherClient başlatıldı. API key: (YOK)
+2026-04-17 23:17:23 | INFO     | src.api.fastapi_app | LiveWeatherClient hazır.
+2026-04-17 23:17:23 | INFO     | src.api.fastapi_app | API başlatma tamamlandı. http://localhost:8000/docs
+2026-04-17 23:17:24 | INFO     | src.api.fastapi_app | API kapatılıyor...
+2026-04-17 23:17:26 | INFO     | Config | Konfigürasyon yüklendi: settings.yaml (env=development)
+2026-04-17 23:17:26 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:17:26 | INFO     | src.api.fastapi_app |   Akıllı Lojistik API başlatılıyor...
+2026-04-17 23:17:26 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:17:26 | INFO     | src.ml.predictor | Model yükleniyor: C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models\xgboost_delay_model.joblib
+2026-04-17 23:17:28 | INFO     | src.ml.predictor | Model başarıyla yüklendi. Pipeline adımları: ['preprocessor', 'model']
+2026-04-17 23:17:28 | INFO     | src.api.fastapi_app | DelayPredictor yüklendi.
+2026-04-17 23:17:28 | INFO     | src.optimization.route_engine | RouteOptimizer başlatıldı.
+2026-04-17 23:17:28 | INFO     | src.api.fastapi_app | RouteOptimizer hazır.
+2026-04-17 23:17:28 | WARNING  | src.data_ingestion.api_client | OpenWeather API key bulunamadı. OPENWEATHER_API_KEY env değişkenini veya settings.yaml'ı ayarla. Mock veri kullanılacak.
+2026-04-17 23:17:28 | INFO     | src.data_ingestion.api_client | LiveWeatherClient başlatıldı. API key: (YOK)
+2026-04-17 23:17:28 | INFO     | src.api.fastapi_app | LiveWeatherClient hazır.
+2026-04-17 23:17:28 | INFO     | src.api.fastapi_app | API başlatma tamamlandı. http://localhost:8000/docs
+2026-04-17 23:17:40 | INFO     | src.api.fastapi_app | API kapatılıyor...
+2026-04-17 23:17:42 | INFO     | Config | Konfigürasyon yüklendi: settings.yaml (env=development)
+2026-04-17 23:17:42 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:17:42 | INFO     | src.api.fastapi_app |   Akıllı Lojistik API başlatılıyor...
+2026-04-17 23:17:42 | INFO     | src.api.fastapi_app | ==========================================================
+2026-04-17 23:17:42 | INFO     | src.ml.predictor | Model yükleniyor: C:\Users\Eliaçık\hackathon-smart-logistic\outputs\models\xgboost_delay_model.joblib
+2026-04-17 23:17:44 | INFO     | src.ml.predictor | Model başarıyla yüklendi. Pipeline adımları: ['preprocessor', 'model']
+2026-04-17 23:17:44 | INFO     | src.api.fastapi_app | DelayPredictor yüklendi.
+2026-04-17 23:17:44 | INFO     | src.optimization.route_engine | RouteOptimizer başlatıldı.
+2026-04-17 23:17:44 | INFO     | src.api.fastapi_app | RouteOptimizer hazır.
+2026-04-17 23:17:44 | WARNING  | src.data_ingestion.api_client | OpenWeather API key bulunamadı. OPENWEATHER_API_KEY env değişkenini veya settings.yaml'ı ayarla. Mock veri kullanılacak.
+2026-04-17 23:17:44 | INFO     | src.data_ingestion.api_client | LiveWeatherClient başlatıldı. API key: (YOK)
+2026-04-17 23:17:44 | INFO     | src.api.fastapi_app | LiveWeatherClient hazır.
+2026-04-17 23:17:44 | INFO     | src.api.fastapi_app | API başlatma tamamlandı. http://localhost:8000/docs
