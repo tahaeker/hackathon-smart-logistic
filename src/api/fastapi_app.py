@@ -168,6 +168,10 @@ class OptimizeRequest(BaseModel):
                                                 description="Hareket zamanı (None = şimdiki an)")
     stops:           list[StopInput]  = Field(..., min_length=2,
                                              description="En az 2 durak gereklidir")
+    fixed_positions: Optional[list[int]] = Field(
+        None,
+        description="Sabit tutulacak 0-tabanlı pozisyonlar (None = tüm duraklar dinamik)"
+    )
 
     @field_validator("stops")
     @classmethod
@@ -553,7 +557,8 @@ async def predict_delay(
         "- **N ≤ 10 mobil durak** → Tam permutasyon (garantili optimal)\n"
         "- **N > 10 mobil durak** → 2-opt yerel arama (hızlı yaklaşık)\n\n"
         "### Kısıtlar\n"
-        "- 1. durak daima **sabit anchor**'dır (optimize edilmez)\n"
+        "- Varsayılan: **tüm duraklar dinamik** (hiçbiri sabit değil)\n"
+        "- `fixed_positions` ile opsiyonel pozisyon kilitleme yapılabilir\n"
         "- Zaman penceresi ihlalleri maliyet fonksiyonuna ceza olarak eklenir\n"
         "- ML modeli her permutasyon için gecikme tahmini yapar"
     ),
@@ -584,11 +589,17 @@ async def optimize_route(
         )
 
         # 4. Optimizasyon — ağır hesaplamayı thread pool'a taşı
+        fixed_pos = (
+            frozenset(request.fixed_positions)
+            if request.fixed_positions
+            else frozenset()
+        )
         result = await asyncio.to_thread(
             optimizer.optimize_route,
             request.route_id,
             stops_df,
             departure,
+            fixed_pos,
         )
 
         elapsed_ms = round((time.perf_counter() - t0) * 1000, 2)

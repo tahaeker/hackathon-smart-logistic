@@ -43,7 +43,7 @@ st.set_page_config(
 # ════════════════════════════════════════════════════════════
 # Sabitler
 # ════════════════════════════════════════════════════════════
-API_BASE        = "http://127.0.0.1:8001"
+API_BASE        = "http://127.0.0.1:8000"
 STOPS_CSV       = PROJECT_ROOT / "data" / "raw" / "route_stops.csv"
 TIMEOUT_SEC     = 10    # /health, /predict için
 TIMEOUT_LONG    = 120   # /optimize için (büyük rotalarda uzun sürebilir)
