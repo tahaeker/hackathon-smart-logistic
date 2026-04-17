@@ -84,10 +84,6 @@ NUMERIC_CANDIDATES: list[str] = [
     "day_of_month",
     "is_rush_hour",
     "is_weekend",
-    # Gecikme
-    "delay_ratio",
-    "cumulative_delay_at_stop",
-    "overall_delay_factor",
 ]
 
 CATEGORICAL_CANDIDATES: list[str] = [
@@ -437,7 +433,7 @@ class DelayModelTrainer:
                 self.pipeline, X, y,
                 cv=kf,
                 scoring="neg_mean_absolute_error",
-                n_jobs=-1,
+                n_jobs=1,
             )
             cv_mae_mean = round(float(-scores.mean()), 4)
             cv_mae_std  = round(float(scores.std()), 4)
